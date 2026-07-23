@@ -1,0 +1,184 @@
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis de mantenimiento</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="data/movements.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <div class="brand">
+          <span class="brand__mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M4 19V10M12 19V5M20 19v-6" />
+            </svg>
+          </span>
+          <span class="brand__name">Pulse<span class="accent">Mant</span></span>
+        </div>
+        <p class="badge-pill">Prueba técnica · Datos ficticios</p>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero__inner">
+        <h1>Movimientos de <span class="accent">mantenimiento</span></h1>
+        <p class="hero__lead">Convierte los registros contables en información útil para decidir.</p>
+        <p id="record-count" class="hero__meta">Cargando datos…</p>
+      </div>
+    </section>
+
+    <div class="kpi-float">
+      <div id="kpi-grid" class="kpi-grid" aria-live="polite">
+
+        <div class="kpi-card">
+          <span class="kpi-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1.1 1.1-2 2.5-2s2.5.9 2.5 2c0 2.5-5 1.5-5 4 0 1.1 1.1 2 2.5 2s2.5-.9 2.5-2"/></svg>
+          </span>
+          <span class="kpi-label">Gasto total</span>
+          <span class="kpi-value" id="kpi-total">—</span>
+          <span class="kpi-sub" id="kpi-total-sub"></span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+          </span>
+          <span class="kpi-label">Movimientos</span>
+          <span class="kpi-value" id="kpi-count">—</span>
+          <span class="kpi-sub" id="kpi-count-sub"></span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l4-7h10l4 7-9 9-9-9Z"/><path d="M3 12h18"/></svg>
+          </span>
+          <span class="kpi-label">Ticket promedio</span>
+          <span class="kpi-value" id="kpi-average">—</span>
+          <span class="kpi-sub" id="kpi-average-sub"></span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2"/><circle cx="12" cy="12" r="4"/></svg>
+          </span>
+          <span class="kpi-label">Categoría con mayor gasto</span>
+          <span class="kpi-value" id="kpi-top-category">—</span>
+          <span class="kpi-sub" id="kpi-top-category-sub"></span>
+        </div>
+
+      </div>
+    </div>
+
+    <main>
+      <section id="insight" class="section">
+        <div class="section__head">
+          <h2>Hallazgo <span class="accent">detectado</span></h2>
+          <p class="section__sub">La señal más útil que encontramos en los datos, calculada automáticamente.</p>
+        </div>
+        <div class="insight-card">
+          <span class="insight-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a6 6 0 0 0-3.5 10.9c.5.4.9 1 .9 1.6V16h5.2v-1.5c0-.6.4-1.2.9-1.6A6 6 0 0 0 12 2Z"/></svg>
+          </span>
+          <p id="insight-text">Calculando…</p>
+        </div>
+      </section>
+
+      <section id="visualization" class="section">
+        <div class="section__head">
+          <h2>Tu <span class="accent">análisis</span></h2>
+          <p class="section__sub">Filtra por planta y compara la dimensión que más te interese.</p>
+        </div>
+
+        <div class="controls">
+          <div class="control">
+            <label for="plant-filter">Planta</label>
+            <select id="plant-filter">
+              <option value="all">Todas las plantas</option>
+            </select>
+          </div>
+          <div class="control">
+            <label for="dimension-select">Comparar por</label>
+            <select id="dimension-select">
+              <option value="plant">Planta</option>
+              <option value="account_name">Categoría</option>
+              <option value="equipment_name">Equipo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Evolución mensual del gasto</h3>
+            <div class="chart-wrapper">
+              <canvas id="trend-chart" role="img" aria-label="Gráfica de línea con el gasto mensual"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 id="compare-title">Gasto por planta</h3>
+            <div class="chart-wrapper">
+              <canvas id="compare-chart" role="img" aria-label="Gráfica de barras comparando el gasto por dimensión seleccionada"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="details" class="section">
+        <div class="section__head">
+          <h2>Datos en <span class="accent">crudo</span></h2>
+          <p class="section__sub" id="details-count"></p>
+        </div>
+        <div class="table-card">
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <button type="button" class="sort-btn" data-sort="movement_date">Fecha <span class="sort-arrow" data-arrow="movement_date"></span></button>
+                  </th>
+                  <th>Planta</th>
+                  <th>Categoría</th>
+                  <th>Artículo</th>
+                  <th>Equipo</th>
+                  <th class="col-right">
+                    <button type="button" class="sort-btn" data-sort="amount">Importe <span class="sort-arrow" data-arrow="amount"></span></button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="raw-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <div class="brand brand--footer">
+          <span class="brand__mark" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+              <path d="M4 19V10M12 19V5M20 19v-6" />
+            </svg>
+          </span>
+          <span class="brand__name">Pulse<span class="accent">Mant</span></span>
+        </div>
+        <p>Datos ficticios · Construido con HTML, CSS y JavaScript vanilla.</p>
+      </div>
+    </footer>
+
+    <button id="scroll-top" class="scroll-top" type="button" aria-label="Volver arriba">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  </body>
+</html>
